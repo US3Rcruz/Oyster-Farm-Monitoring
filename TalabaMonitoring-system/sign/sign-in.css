@@ -1,0 +1,476 @@
+/* ============================================================
+   OYSTER FARM — SIGN IN / SIGN UP
+   Water Sports Hero Theme
+   Full-bleed ocean photo background + floating white glass card
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Nunito:wght@300;400;500;600;700&display=swap');
+
+/* ─── CSS Variables ──────────────────────────────────────── */
+:root {
+    --w-blue:        #1ab3ef;
+    --w-blue-deep:   #0a8cc7;
+    --w-teal:        #00c2d4;
+    --w-orange:      #f5a623;
+    --w-white:       #ffffff;
+    --w-gray:        #6b8fa3;
+    --w-gray-border: #d0e8f5;
+    --w-text:        #1a3a4f;
+    --w-text-mid:    #2d6080;
+    --w-shadow:      rgba(10, 60, 100, 0.35);
+}
+
+/* ─── Base ───────────────────────────────────────────────── */
+html, body {
+    height: 100%;
+    font-family: 'Nunito', sans-serif;
+    color: var(--w-text);
+    overflow-x: hidden;
+}
+
+/* ─── Full-bleed Ocean Photo Background ─────────────────── */
+body {
+    background-color: #0a3d6e; /* fallback while image loads */
+
+    /* 
+     * SWAP IN YOUR OWN PHOTO:
+     * Replace the URL below with your actual ocean/bay photo path.
+     * Example: background-image: url('../images/ocean-bg.jpg');
+     *
+     * Free options that work great:
+     *   https://images.unsplash.com/photo-1505118380757-91f5f5632de0?w=1920   (underwater rays)
+     *   https://images.unsplash.com/photo-1518020382113-a7e8fc38eac9?w=1920   (ocean waves)
+     *   https://images.unsplash.com/photo-1530053969600-caed2596d242?w=1920   (surfer wave)
+     *
+     * For now we use a CSS-only ocean gradient that mimics the photo look:
+     */
+    background-image:
+        /* simulate the wave photo layered look */
+        linear-gradient(
+            160deg,
+            rgba(8, 60, 110, 0.72)   0%,
+            rgba(10, 120, 180, 0.55) 35%,
+            rgba(20, 160, 210, 0.45) 55%,
+            rgba(30, 180, 220, 0.55) 75%,
+            rgba(8, 50, 90, 0.7)     100%
+        ),
+        /* base ocean gradient simulating the photo */
+        linear-gradient(
+            135deg,
+            #0a3d6e 0%,
+            #1472a8 20%,
+            #1da5d4 40%,
+            #62cde8 55%,
+            #1a90c0 70%,
+            #0b4a7a 100%
+        );
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    position: relative;
+}
+
+/* 
+ * IF YOU HAVE A PHOTO, add this class to <body> instead and
+ * set the image via inline style or a second CSS rule:
+ *   body { background-image: url('your-photo.jpg'); }
+ * The overlay below will sit on top of it automatically.
+ */
+
+/* Dark overlay so text/form stays readable over busy photos */
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+        linear-gradient(
+            160deg,
+            rgba(5, 30, 60, 0.50)   0%,
+            rgba(8, 70, 120, 0.30)  40%,
+            rgba(15, 110, 160, 0.25) 60%,
+            rgba(5, 40, 80, 0.45)   100%
+        );
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Foam / spray particles floating */
+body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background-image:
+        radial-gradient(circle 6px  at 8%  78%, rgba(255,255,255,0.18) 0%, transparent 100%),
+        radial-gradient(circle 4px  at 25% 55%, rgba(255,255,255,0.12) 0%, transparent 100%),
+        radial-gradient(circle 8px  at 60% 82%, rgba(255,255,255,0.10) 0%, transparent 100%),
+        radial-gradient(circle 5px  at 78% 40%, rgba(255,255,255,0.14) 0%, transparent 100%),
+        radial-gradient(circle 3px  at 90% 65%, rgba(255,255,255,0.16) 0%, transparent 100%),
+        radial-gradient(circle 6px  at 42% 25%, rgba(255,255,255,0.10) 0%, transparent 100%),
+        radial-gradient(circle 4px  at 14% 30%, rgba(255,255,255,0.12) 0%, transparent 100%);
+    animation: sprayFloat 16s ease-in-out infinite alternate;
+}
+
+/* Bottom wave overlay — like the hero section edge */
+.wave-bottom {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    height: 180px;
+    pointer-events: none;
+    z-index: 1;
+    background:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 180'%3E%3Cpath fill='rgba(255%2C255%2C255%2C0.06)' d='M0,120L60,108C120,96,240,72,360,77C480,83,600,118,720,123C840,128,960,103,1080,88C1200,72,1320,67,1380,77L1440,88L1440,180L0,180Z'/%3E%3Cpath fill='rgba(255%2C255%2C255%2C0.04)' d='M0,140L80,128C160,116,320,92,480,96C640,100,800,136,960,140C1120,144,1280,116,1360,104L1440,92L1440,180L0,180Z'/%3E%3C/svg%3E")
+        bottom center / cover no-repeat;
+}
+
+@keyframes sprayFloat {
+    0%   { transform: translateY(0)    translateX(0);   opacity: 0.8; }
+    100% { transform: translateY(-20px) translateX(6px); opacity: 1;   }
+}
+
+/* ─── Layout ─────────────────────────────────────────────── */
+body.d-flex.align-items-center {
+    min-height: 100vh;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem;
+    position: relative;
+    z-index: 1;
+}
+
+/* ─── Hero-style pill label (like "Unforgettable Aquatic Activities") */
+.hero-pill {
+    display: inline-block;
+    background: linear-gradient(90deg, var(--w-blue), var(--w-teal));
+    color: #fff;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border-radius: 50px;
+    padding: 0.3em 1em;
+    margin-bottom: 0.75rem;
+}
+
+/* ─── Form Card — white glass floating panel ─────────────── */
+.form-signin {
+    max-width: 440px;
+    width: 100%;
+    padding: 2.5rem 2.25rem 2rem;
+
+    /* White card that floats over the photo — like the hero overlay cards */
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+
+    border: 1.5px solid rgba(255, 255, 255, 0.8);
+    border-radius: 28px;
+    box-shadow:
+        0 12px 50px rgba(5, 30, 70, 0.45),
+        0 3px 14px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255,255,255,1);
+
+    position: relative;
+    overflow: hidden;
+    z-index: 2;
+    animation: formRise 0.65s cubic-bezier(0.23, 1, 0.32, 1) both;
+}
+
+/* Top cyan accent bar — same color as "Book Now" button */
+.form-signin::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 5px;
+    background: linear-gradient(90deg, var(--w-blue), var(--w-teal), var(--w-blue));
+    background-size: 200% 100%;
+    animation: shimmer 2.8s linear infinite;
+    border-radius: 28px 28px 0 0;
+}
+
+@keyframes formRise {
+    from { opacity: 0; transform: translateY(32px) scale(0.96); }
+    to   { opacity: 1; transform: translateY(0)    scale(1); }
+}
+
+@keyframes shimmer {
+    0%   { background-position: -200% 0; }
+    100% { background-position:  200% 0; }
+}
+
+/* Ensure form children sit above pseudo-elements */
+.form-signin > * { position: relative; z-index: 1; }
+
+/* ─── Brand / Logo ───────────────────────────────────────── */
+.oyster-brand {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 1.2rem;
+    gap: 0.45rem;
+}
+
+.oyster-icon {
+    width: 62px;
+    height: 62px;
+    background: linear-gradient(135deg, var(--w-blue) 0%, var(--w-teal) 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.75rem;
+    box-shadow:
+        0 6px 22px rgba(26, 179, 239, 0.45),
+        0 0 0 7px rgba(26, 179, 239, 0.1);
+    animation: iconPulse 3s ease-in-out infinite;
+}
+
+@keyframes iconPulse {
+    0%, 100% { box-shadow: 0 6px 22px rgba(26,179,239,0.45), 0 0 0 7px rgba(26,179,239,0.10); }
+    50%       { box-shadow: 0 6px 30px rgba(26,179,239,0.60), 0 0 0 12px rgba(26,179,239,0.05); }
+}
+
+.brand-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    color: var(--w-blue-deep);
+    text-transform: uppercase;
+    opacity: 0.75;
+}
+
+/* ─── Page Title ─────────────────────────────────────────── */
+h1.center-header {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 800;
+    text-align: center;
+    color: var(--w-text);
+    letter-spacing: 0.02em;
+    margin-bottom: 1.3rem !important;
+}
+
+/* ─── Floating Inputs ────────────────────────────────────── */
+.form-floating {
+    margin-bottom: 0.55rem;
+    position: relative;
+}
+
+.form-floating > .form-control {
+    background: #f4fafd !important;
+    border: 1.5px solid var(--w-gray-border) !important;
+    border-radius: 14px !important;
+    color: var(--w-text) !important;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.93rem;
+    font-weight: 500;
+    height: 56px;
+    padding: 1rem 0.9rem 0.25rem !important;
+    transition: border-color 0.22s, box-shadow 0.22s, background 0.22s;
+    box-shadow: none;
+}
+
+.form-floating > .form-control::placeholder { color: transparent; }
+
+.form-floating > .form-control:focus {
+    background: var(--w-white) !important;
+    border-color: var(--w-blue) !important;
+    box-shadow:
+        0 0 0 3.5px rgba(26, 179, 239, 0.16),
+        0 2px 10px rgba(26, 179, 239, 0.1) !important;
+    outline: none;
+}
+
+.form-floating > label {
+    color: var(--w-gray) !important;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    padding: 0.95rem 0.9rem;
+    transition: opacity 0.15s ease-in-out, transform 0.15s ease-in-out, color 0.15s;
+}
+
+.form-floating > .form-control:focus ~ label,
+.form-floating > .form-control:not(:placeholder-shown) ~ label {
+    color: var(--w-blue-deep) !important;
+    opacity: 1;
+}
+
+/* Date input — always float label */
+.form-floating > input[type="date"] ~ label {
+    transform: scale(0.85) translateY(-0.5rem) translateX(0.15rem) !important;
+    color: var(--w-blue-deep) !important;
+    opacity: 1;
+}
+
+/* Stacked pair */
+.signin-stacked-top {
+    border-bottom-right-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+    border-bottom-color: #e2f3fb !important;
+}
+.signin-stacked-top-wrap { margin-bottom: 0 !important; }
+.signin-stacked-bottom {
+    border-top-left-radius: 0 !important;
+    border-top-right-radius: 0 !important;
+    border-top-color: #e2f3fb !important;
+}
+
+/* ─── Sex Row ────────────────────────────────────────────── */
+.sex-row {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    flex-wrap: nowrap;
+    gap: 1rem;
+    margin-bottom: 0.55rem !important;
+    padding: 0.65rem 0.9rem;
+    background: #f4fafd;
+    border: 1.5px solid var(--w-gray-border);
+    border-radius: 14px;
+    height: 56px;
+    box-sizing: border-box;
+}
+
+.sex-row .form-control.form-label,
+.sex-row-label {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    color: var(--w-gray) !important;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 0 !important;
+    height: auto !important;
+    width: auto;
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin: 0;
+}
+
+.sex-row .form-check {
+    margin-bottom: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.sex-row .form-check-label {
+    color: var(--w-text-mid) !important;
+    font-size: 0.88rem;
+    font-weight: 500;
+    margin: 0;
+}
+
+/* ─── Checkboxes & Radios ────────────────────────────────── */
+.form-check-input {
+    background-color: var(--w-white) !important;
+    border-color: var(--w-gray-border) !important;
+    flex-shrink: 0;
+}
+
+.form-check-input:checked {
+    background-color: var(--w-blue) !important;
+    border-color: var(--w-blue) !important;
+}
+
+.form-check-input:focus {
+    box-shadow: 0 0 0 0.2rem rgba(26, 179, 239, 0.2) !important;
+}
+
+.form-check.text-start { margin: 0.6rem 0 0.5rem; }
+
+.form-check-label {
+    color: var(--w-text-mid);
+    font-size: 0.86rem;
+    font-weight: 500;
+}
+
+/* ─── Submit Button — "Book Now" style ───────────────────── */
+.btn-primary {
+    background: linear-gradient(90deg, var(--w-blue) 0%, var(--w-teal) 100%) !important;
+    border: none !important;
+    border-radius: 50px !important;
+    font-family: 'Poppins', sans-serif !important;
+    font-size: 0.95rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.06em !important;
+    color: #fff !important;
+    padding: 0.72rem !important;
+    transition: all 0.28s ease !important;
+    box-shadow: 0 6px 22px rgba(26, 179, 239, 0.45) !important;
+    position: relative;
+    overflow: hidden;
+    margin-top: 0.4rem;
+}
+
+/* Shine sweep on hover */
+.btn-primary::before {
+    content: '';
+    position: absolute;
+    top: -50%; left: -70%;
+    width: 50%; height: 200%;
+    background: rgba(255, 255, 255, 0.2);
+    transform: skewX(-20deg);
+    transition: left 0.45s ease;
+}
+.btn-primary:hover::before { left: 140%; }
+
+.btn-primary:hover {
+    background: linear-gradient(90deg, var(--w-blue-deep) 0%, var(--w-blue) 100%) !important;
+    box-shadow: 0 8px 30px rgba(26, 179, 239, 0.6) !important;
+    transform: translateY(-2px);
+    color: #fff !important;
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+    box-shadow: 0 3px 14px rgba(26, 179, 239, 0.4) !important;
+}
+
+/* ─── Bottom Link ────────────────────────────────────────── */
+a.center-header {
+    display: block;
+    text-align: center;
+    margin-top: 1rem;
+    color: var(--w-blue-deep);
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+a.center-header:hover {
+    color: var(--w-teal);
+    text-decoration: underline;
+}
+
+/* ─── Alerts ─────────────────────────────────────────────── */
+.alert-danger {
+    background: rgba(232, 57, 74, 0.08) !important;
+    border: 1.5px solid rgba(232,57,74,0.25) !important;
+    color: #c0202f !important;
+    border-radius: 12px !important;
+    font-size: 0.87rem; font-weight: 500;
+}
+.alert-success {
+    background: rgba(39, 201, 143, 0.08) !important;
+    border: 1.5px solid rgba(39,201,143,0.3) !important;
+    color: #0e7a58 !important;
+    border-radius: 12px !important;
+    font-size: 0.87rem; font-weight: 500;
+}
+
+/* ─── Scrollbar ──────────────────────────────────────────── */
+::-webkit-scrollbar { width: 7px; }
+::-webkit-scrollbar-track { background: #0a3d6e; }
+::-webkit-scrollbar-thumb { background: rgba(26,179,239,0.5); border-radius: 6px; }
+::-webkit-scrollbar-thumb:hover { background: var(--w-blue); }

@@ -1,0 +1,175 @@
+.bi {
+    display: inline-block;
+    width: 1rem;
+    height: 1rem;
+}
+
+/*
+ * -------------------------------------------------- Sidebar ---
+ */
+
+@media (min-width: 768px) {
+    .sidebar .offcanvas-lg {
+        position: -webkit-sticky;
+        position: sticky;
+        top: 48px;
+    }
+    .navbar-search {
+        display: block;
+    }
+}
+
+.sidebar .nav-link {
+    font-size: .875rem;
+    font-weight: 500;
+}
+
+.sidebar .nav-link.active {
+    color: #2470dc;
+}
+
+.sidebar-heading {
+    font-size: .75rem;
+}
+
+/*
+ * -------------------------------------------------- Navbar ---
+ */
+
+.navbar-brand {
+    padding-top: .75rem;
+    padding-bottom: .75rem;
+    background-color: rgba(0, 0, 0, .25);
+    box-shadow: inset 1px 0 0 rgba(0, 0, 0, .25);
+}
+
+.navbar .form-control {
+    padding: .75rem 1rem;
+}
+
+
+/*
+ * -from other project
+ */
+
+.section-height {
+    background-color: #1E1E1E;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.card {
+    background-color: #252525;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.card.small {
+    height: 120px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.card.large {
+    height: 450px;
+    grid-column: span 2;
+}
+
+
+
+/* so copy-paste these if needed: ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+
+.dropdown-item-danger {
+    color: var(--bs-red);
+}
+.dropdown-item-danger:hover,
+.dropdown-item-danger:focus {
+    color: #fff;
+    background-color: var(--bs-red);
+}
+.dropdown-item-danger.active {
+    background-color: var(--bs-red);
+}
+
+.btn-hover-light {
+    color: var(--bs-body-color);
+    background-color: var(--bs-body-bg);
+}
+.btn-hover-light:hover,
+.btn-hover-light:focus {
+    color: var(--bs-link-hover-color);
+    background-color: var(--bs-tertiary-bg);
+}
+
+.cal-month,
+.cal-days,
+.cal-weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    align-items: center;
+}
+.cal-month-name {
+    grid-column-start: 2;
+    grid-column-end: 7;
+    text-align: center;
+}
+.cal-weekday,
+.cal-btn {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    height: 3rem;
+    padding: 0;
+}
+.cal-btn:not([disabled]) {
+    font-weight: 500;
+    color: var(--bs-emphasis-color);
+}
+.cal-btn:hover,
+.cal-btn:focus {
+    background-color: var(--bs-secondary-bg);
+}
+.cal-btn[disabled] {
+    border: 0;
+    opacity: .5;
+}
+
+.w-220px {
+    width: 220px;
+}
+
+.w-280px {
+    width: 280px;
+}
+
+.w-340px {
+    width: 100%;
+}
+
+.opacity-10 {
+    opacity: .1;
+}
+
+.chart {
+    position: relative;
+    height: 400px;
+    width: 100%;
+    margin: 1rem auto;
+}
+
+.farm-card {
+    height: 400px;
+}
